@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suntel API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background-color: #eef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0px 0px 4px #0005;
+
+        }
+
+        form h1 {
+            font-family: sans-serif;
+            color: #25895f;
+        }
+
+        form label {
+            font-family: sans-serif;
+            color: #383838;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        form input {
+            font-family: sans-serif;
+            color: #232323;
+            font-size: 18px;
+            margin-bottom: 5px;
+            padding: 5px 7px;
+            border: none;
+            outline: none;
+            background-color: #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        form button {
+            font-family: sans-serif;
+            color: white;
+            font-size: 18px;
+            margin-bottom: 5px;
+            padding: 5px 7px;
+            border: none;
+            outline: none;
+            background-color: #25895f;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/api/register" method="post" id="registrationForm">
+        <h1>Get started with Suntel!</h1>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="" placeholder="Enter your Email" required id="email">
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Enter your new Password" id="password" required>
+        <button>Register</button>
+    </form>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            const jsonData = {};
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(jsonData),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('registrationForm').innerHTML = `<h3>${data.message + " <br/> your key is:" + data.key}</h3>`
+
+                } else {
+                    console.error('Failed to register:', response.statusText);
+                    document.getElementById('registrationForm').innerHTML = `<p> ${response.statusText}</p>`
+                }
+
+            } catch (error) {
+                console.error('Error registering:', error);
+            }
+        });
+    </script>
+
+</body>
+
+
+</html>

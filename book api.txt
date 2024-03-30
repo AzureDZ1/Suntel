@@ -1,0 +1,44 @@
+To create a RESTful API for your hotel management system, you'll need to define endpoints for various actions such as setting reservations, canceling reservations, and retrieving information about available rooms. Additionally, you'll need to design the structure of your database to store relevant information. Here's a blueprint for your API and database structure:
+
+### RESTful API Endpoints:
+
+1. **Set Reservation Endpoint**:
+   - Endpoint Path: `/api/reservations`
+   - Method: POST
+   - Description: Allows agencies to set new reservations.
+   - Request Body: JSON object containing reservation details (e.g., guest name, check-in/out dates, room type).
+   - Response: Success message or error response.
+
+2. **Cancel Reservation Endpoint**:
+   - Endpoint Path: `/api/reservations/:reservationId`
+   - Method: DELETE
+   - Description: Allows agencies to cancel existing reservations by providing the reservation ID.
+   - Request Parameters: `reservationId` (reservation ID to be canceled).
+   - Response: Success message or error response.
+
+3. **Get Available Rooms Endpoint**:
+   - Endpoint Path: `/api/rooms/available`
+   - Method: GET
+   - Description: Retrieves information about available rooms in the hotel.
+   - Response: JSON array containing available room details (e.g., room number, type, price).
+
+4. **Get Taken Rooms Endpoint**:
+   - Endpoint Path: `/api/rooms/taken`
+   - Method: GET
+   - Description: Retrieves information about rooms that are already booked/reserved.
+   - Response: JSON array containing reserved room details (e.g., room number, guest name, check-in/out dates).
+
+### Database Structure:
+
+You can design your database using tables/entities for the following entities:
+
+1. **Rooms Table**:
+   - Columns: `id` (primary key), `room_number`, `room_type`, `price`, `availability_status` (e.g., available, reserved).
+
+2. **Reservations Table**:
+   - Columns: `id` (primary key), `guest_name`, `check_in_date`, `check_out_date`, `room_id` (foreign key referencing Rooms table), `agency_id` (if needed to track which agency made the reservation).
+
+3. **Agencies Table** (if agencies need to be registered and managed):
+   - Columns: `id` (primary key), `agency_name`, `contact_person`, `email`, `phone`.
+
+By following this structure, your API endpoints can interact with the database to manage reservations, retrieve room information, and handle cancellations efficiently. Make sure to implement authentication and authorization mechanisms to secure your API endpoints and restrict access based on agency credentials or tokens.
