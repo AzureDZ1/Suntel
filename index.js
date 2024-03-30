@@ -162,3 +162,6 @@ async function findKey(key){
 app.get("/api", (req, res) => {
     res.render("register")
 })
+app.get("/", (req, res) => {
+    res.send("<h1>App is running</h1>")
+})
